@@ -1,0 +1,17 @@
+2020-09-09 11:09:18.216  INFO 38380 --- [restartedMain] com.jeffry.miaosha.MiaoshaApplication    : Starting MiaoshaApplication on WIN-TP8G8AD8AG9 with PID 38380 (D:\ideaProjects\miaosha\target\classes started by Administrator in D:\ideaProjects\miaosha)
+2020-09-09 11:09:18.220  INFO 38380 --- [restartedMain] com.jeffry.miaosha.MiaoshaApplication    : No active profile set, falling back to default profiles: default
+2020-09-09 11:09:18.310  INFO 38380 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2020-09-09 11:09:18.311  INFO 38380 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2020-09-09 11:09:19.675  INFO 38380 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8090 (http)
+2020-09-09 11:09:19.685  INFO 38380 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-09-09 11:09:19.685  INFO 38380 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.36]
+2020-09-09 11:09:19.687  INFO 38380 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : Loaded Apache Tomcat Native library [1.2.24] using APR version [1.7.0].
+2020-09-09 11:09:19.688  INFO 38380 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+2020-09-09 11:09:19.688  INFO 38380 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+2020-09-09 11:09:19.691  INFO 38380 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : OpenSSL successfully initialized [OpenSSL 1.1.1g  21 Apr 2020]
+2020-09-09 11:09:19.789  INFO 38380 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-09-09 11:09:19.790  INFO 38380 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1479 ms
+2020-09-09 11:09:20.284  INFO 38380 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-09 11:09:20.459  INFO 38380 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2020-09-09 11:09:20.498  INFO 38380 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8090 (http) with context path ''
+2020-09-09 11:09:20.511  INFO 38380 --- [restartedMain] com.jeffry.miaosha.MiaoshaApplication    : Started MiaoshaApplication in 2.695 seconds (JVM running for 3.518)
