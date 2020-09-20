@@ -15,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author ：JEFFRY
@@ -52,7 +56,7 @@ public class ItemSrviceImpl implements ItemService {
             return null;
         }
         ItemStockDO itemStockDO = new ItemStockDO();
-        itemStockDO.setId(itemModel.getId());
+        itemStockDO.setItemId(itemModel.getId());
         itemStockDO.setStock(itemModel.getStock());
         return itemStockDO;
     }
@@ -77,7 +81,23 @@ public class ItemSrviceImpl implements ItemService {
 
     @Override
     public List<ItemModel> listItem() {
-        return null;
+
+
+        List<ItemDO> itemDOList = itemDOMapper.listItem();
+        if (!itemDOList.isEmpty()){
+            List<Integer> itemIds = itemDOList.stream().map(itemDO -> itemDO.getId()).collect(Collectors.toList());
+            List<ItemStockDO> itemStockDOList = itemStockDOMapper.selectListByItemId(itemIds);
+            //将两个list根据item_id合并
+            List<ItemModel> itemModelList = itemDOList.stream().map(itemDO ->itemStockDOList.stream()
+                    .filter(itemStockDO -> Objects.equals(itemDO.getId(),itemStockDO.getItemId())).findFirst().map(i -> {
+                        ItemModel itemModel = this.converModelFromDataObject(itemDO,i);
+                        return itemModel;
+                    }).orElse(null)).filter(Objects::nonNull).collect(Collectors.toList());
+            return itemModelList;
+        }else{
+            return null;
+        }
+
     }
 
     @Override
@@ -86,7 +106,7 @@ public class ItemSrviceImpl implements ItemService {
          if (itemDO == null){
              return null;
          }
-         ItemStockDO itemStockDO = itemStockDOMapper.selectByPrimaryKey(itemDO.getId());
+         ItemStockDO itemStockDO = itemStockDOMapper.selectByItemId(itemDO.getId());
 
          //将dataobject -> model
         ItemModel itemModel = converModelFromDataObject(itemDO,itemStockDO);

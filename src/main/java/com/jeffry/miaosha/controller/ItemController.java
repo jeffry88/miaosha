@@ -9,12 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ：JEFFRY
@@ -34,6 +33,7 @@ public class ItemController extends BaseController{
     ItemService itemService;
     //创建商品
     @RequestMapping(value = "/createItem",method = {RequestMethod.POST},consumes = {CONTENT_TYPE_FORMED})
+    @ResponseBody
     public CommonReturnType createItem(@RequestParam(name = "title") String title,
                                        @RequestParam(name = "description") String description,
                                        @RequestParam(name = "price") BigDecimal price,
@@ -49,6 +49,29 @@ public class ItemController extends BaseController{
         ItemModel itemModelForReturn = itemService.createItem(itemModel);
         ItemVO itemVO = this.convertVOFromModel(itemModelForReturn);
         return CommonReturnType.create(itemVO);
+    }
+
+    //商品详情页的浏览
+    @RequestMapping(value = "/getItem",method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType getItem(@RequestParam(name = "id") Integer id){
+        ItemModel itemModel = itemService.getItemById(id);
+        ItemVO itemVO = convertVOFromModel(itemModel);
+        return CommonReturnType.create(itemVO);
+
+    }
+
+    //商品列表页面浏览
+    @RequestMapping(value = "/getItemList",method = {RequestMethod.GET})
+    @ResponseBody
+    public CommonReturnType getItemList(){
+        List<ItemModel> itemModelList = itemService.listItem();
+        //使用stream api将itemModel转为itemVO
+        itemModelList.stream().map(itemModel -> {
+            ItemVO itemVO = this.convertVOFromModel(itemModel);
+            return itemVO;
+        }).collect(Collectors.toList());
+      return CommonReturnType.create(itemModelList);
     }
 
     private ItemVO convertVOFromModel(ItemModel itemModel){
