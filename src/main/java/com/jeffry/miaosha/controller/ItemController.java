@@ -67,11 +67,11 @@ public class ItemController extends BaseController{
     public CommonReturnType getItemList(){
         List<ItemModel> itemModelList = itemService.listItem();
         //使用stream api将itemModel转为itemVO
-        itemModelList.stream().map(itemModel -> {
+       List<ItemVO> itemVOList = itemModelList.stream().map(itemModel -> {
             ItemVO itemVO = this.convertVOFromModel(itemModel);
             return itemVO;
         }).collect(Collectors.toList());
-      return CommonReturnType.create(itemModelList);
+      return CommonReturnType.create(itemVOList);
     }
 
     private ItemVO convertVOFromModel(ItemModel itemModel){

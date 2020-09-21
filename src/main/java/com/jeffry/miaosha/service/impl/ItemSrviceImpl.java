@@ -113,6 +113,27 @@ public class ItemSrviceImpl implements ItemService {
         return itemModel;
     }
 
+    /**
+     * @Author: JEFFRY
+     * @Description: 更新库存
+     * @Date: 2020/9/21 17:48
+     * @param itemId
+     * @param amount
+     * @return boolean
+     */
+    @Override
+    @Transactional
+    public boolean decreaseStock(Integer itemId, Integer amount) {
+        int affectedRow = itemStockDOMapper.decreaseStock(itemId,amount);
+        if (affectedRow > 0){
+            //更新库存成功
+            return true;
+        }else {
+            //更新库存失败
+            return false;
+        }
+    }
+
     private ItemModel converModelFromDataObject(ItemDO itemDO,ItemStockDO itemStockDO){
         ItemModel itemModel = new ItemModel();
         BeanUtils.copyProperties(itemDO,itemModel);
