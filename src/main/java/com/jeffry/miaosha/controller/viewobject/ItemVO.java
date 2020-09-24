@@ -1,6 +1,7 @@
 package com.jeffry.miaosha.controller.viewobject;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -34,6 +35,15 @@ public class ItemVO {
 
     //商品描述图片url
     private String imgUrl;
+
+    //秒杀活动状态
+    private Integer promoStatus;
+    //秒杀价格
+    private BigDecimal promoPrice;
+    //秒杀活动id
+    private Integer promoID;
+    //秒杀活动开始时间
+    private String startDate;
 
     public Integer getId() {
         return id;
@@ -89,5 +99,37 @@ public class ItemVO {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Integer getPromoStatus() {
+        return promoStatus;
+    }
+
+    public void setPromoStatus(Integer promoStatus) {
+        this.promoStatus = promoStatus;
+    }
+
+    public BigDecimal getPromoPrice() {
+        return promoPrice;
+    }
+
+    public void setPromoPrice(BigDecimal promoPrice) {
+        this.promoPrice = promoPrice;
+    }
+
+    public Integer getPromoID() {
+        return promoID;
+    }
+
+    public void setPromoID(Integer promoID) {
+        this.promoID = promoID;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

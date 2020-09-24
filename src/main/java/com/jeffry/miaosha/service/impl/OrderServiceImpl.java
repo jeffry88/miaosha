@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderModel createOrder(Integer userId, Integer itemId, Integer amount) throws BusinessException {
+    public OrderModel createOrder(Integer userId, Integer itemId,Integer promoId, Integer amount) throws BusinessException {
         //校验下单状态
         ItemModel itemModel = itemService.getItemById(itemId);
         if (itemModel == null) {
@@ -61,7 +61,14 @@ public class OrderServiceImpl implements OrderService {
         if (amount <= 0 || amount > 99) {
             throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR, "商品超出购买限制");
         }
-
+        //校验活动信息
+        if (promoId != null){
+            if (promoId.intValue() != itemModel.getPromoModel().getId()){
+                throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"活动信息不正确");
+            }else if (itemModel.getPromoModel().getStatus() != 2){
+                throw new BusinessException(EmBusinessError.PARAMETER_VALIDATION_ERROR,"活动未开始");
+            }
+        }
         //落单减库存
         boolean res = itemService.decreaseStock(itemId, amount);
         if (!res) {
@@ -72,8 +79,13 @@ public class OrderServiceImpl implements OrderService {
         orderModel.setUserId(userId);
         orderModel.setItemId(itemId);
         orderModel.setAmount(amount);
-        orderModel.setItemPrice(itemModel.getPrice());
-        orderModel.setTotalPrice(itemModel.getPrice().multiply(new BigDecimal(amount)));
+        if (promoId != null){
+            orderModel.setItemPrice(itemModel.getPromoModel().getPromoItemPrice());
+        }else{
+            orderModel.setItemPrice(itemModel.getPrice());
+        }
+        orderModel.setPromoId(promoId);
+        orderModel.setTotalPrice(orderModel.getItemPrice().multiply(new BigDecimal(amount)));
         //生成订单时间
         Date date = new Date();
         Timestamp now = new Timestamp(date.getTime());

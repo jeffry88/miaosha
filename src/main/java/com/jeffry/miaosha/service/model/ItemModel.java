@@ -41,6 +41,18 @@ public class ItemModel {
     @NotBlank(message = "商品图片信息不能为空")
     private String imgUrl;
 
+
+    //使用聚合模型，promoModel不为null表示还有秒杀活动
+    private PromoModel promoModel;
+
+    public PromoModel getPromoModel() {
+        return promoModel;
+    }
+
+    public void setPromoModel(PromoModel promoModel) {
+        this.promoModel = promoModel;
+    }
+
     public Integer getId() {
         return id;
     }

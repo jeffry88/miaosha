@@ -27,6 +27,9 @@ public class OrderModel {
     //下单时间
     private Date orderTime;
 
+    //秒杀商品id
+    private Integer promoId;
+
     public String getId() {
         return id;
     }
@@ -81,5 +84,13 @@ public class OrderModel {
 
     public void setOrderTime(Date orderTime) {
         this.orderTime = orderTime;
+    }
+
+    public Integer getPromoId() {
+        return promoId;
+    }
+
+    public void setPromoId(Integer promoId) {
+        this.promoId = promoId;
     }
 }

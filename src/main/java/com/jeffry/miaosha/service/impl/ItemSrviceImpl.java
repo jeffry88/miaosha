@@ -2,12 +2,15 @@ package com.jeffry.miaosha.service.impl;
 
 import com.jeffry.miaosha.dao.ItemDOMapper;
 import com.jeffry.miaosha.dao.ItemStockDOMapper;
+import com.jeffry.miaosha.dao.PromoDOMapper;
 import com.jeffry.miaosha.dataobject.ItemDO;
 import com.jeffry.miaosha.dataobject.ItemStockDO;
 import com.jeffry.miaosha.error.BusinessException;
 import com.jeffry.miaosha.error.EmBusinessError;
 import com.jeffry.miaosha.service.ItemService;
+import com.jeffry.miaosha.service.PromoService;
 import com.jeffry.miaosha.service.model.ItemModel;
+import com.jeffry.miaosha.service.model.PromoModel;
 import com.jeffry.miaosha.validator.ValidationResult;
 import com.jeffry.miaosha.validator.ValidatorImpl;
 import org.springframework.beans.BeanUtils;
@@ -41,6 +44,9 @@ public class ItemSrviceImpl implements ItemService {
 
     @Autowired
     private ItemStockDOMapper itemStockDOMapper;
+
+    @Autowired
+    private PromoService promoService;
 
     private ItemDO converItemDOFromItemModel(ItemModel itemModel){
         if (itemModel == null){
@@ -106,10 +112,16 @@ public class ItemSrviceImpl implements ItemService {
          if (itemDO == null){
              return null;
          }
+         //获取库存
          ItemStockDO itemStockDO = itemStockDOMapper.selectByItemId(itemDO.getId());
 
          //将dataobject -> model
         ItemModel itemModel = converModelFromDataObject(itemDO,itemStockDO);
+        //获取活动商品信息
+        PromoModel promoModel = promoService.getPromoByItemId(itemModel.getId());
+        if (promoModel != null && promoModel.getStatus() !=3){
+            itemModel.setPromoModel(promoModel);
+        }
         return itemModel;
     }
 

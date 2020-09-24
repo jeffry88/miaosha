@@ -72,6 +72,12 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.0.Final</version>
         </dependency>
+        <!--时间组件-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.6</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -6,6 +6,8 @@ import com.jeffry.miaosha.response.CommonReturnType;
 import com.jeffry.miaosha.service.ItemService;
 import com.jeffry.miaosha.service.model.ItemModel;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,6 +82,14 @@ public class ItemController extends BaseController{
         }
         ItemVO itemVO = new ItemVO();
         BeanUtils.copyProperties(itemModel,itemVO);
+        if (itemModel.getPromoModel() != null){//含有秒杀活动
+            itemVO.setPromoStatus(itemModel.getPromoModel().getStatus());
+            itemVO.setPromoID(itemModel.getPromoModel().getId());
+            itemVO.setStartDate(itemModel.getPromoModel().getStartDate().toString(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")));
+            itemVO.setPromoPrice(itemModel.getPromoModel().getPromoItemPrice());
+        }else{
+            itemVO.setPromoStatus(0);
+        }
         return itemVO;
     }
 }
